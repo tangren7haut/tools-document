@@ -1,0 +1,13 @@
+server:
+  port: 8084
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/static/
+    suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+publish:
+  path: d:/publish
