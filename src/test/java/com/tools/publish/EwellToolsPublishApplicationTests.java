@@ -17,8 +17,8 @@ public class EwellToolsPublishApplicationTests {
     public void contextLoads() {
     }
     @Test
-    public void testGetFileList(){
+    public void testPagelist(){
         Model model=null;
-        getFileList.getAllFile("d:\\publish", model);
+//        getFileList.pageList(1,model);
     }
 }

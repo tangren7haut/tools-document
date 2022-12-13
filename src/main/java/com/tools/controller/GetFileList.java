@@ -5,9 +5,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -15,16 +17,35 @@ public class GetFileList {
     @Autowired
     private Environment env;
     @RequestMapping("/getlist")
+    public String pageList(@RequestParam(value="pagenum",defaultValue = "0") int pagenum,@RequestParam(value="pageSize",defaultValue = "3") int pageSize, Model model){
+        List<String> filenames = new ArrayList<>();
+        List<String> pageNames=new ArrayList<>();
+        filenames=getAllFile();
+        int total=filenames.size();//总个数
+        int totalpage=total%pageSize==0?(total/pageSize):(total/pageSize)+1;
+        if(pagenum!=totalpage-1){
+            pageNames= filenames.subList(pagenum*pageSize,(pagenum+1)*pageSize);
+        }
+       else{
+            pageNames= filenames.subList(pagenum*pageSize,total-1);
+        }
+
+        model.addAttribute("pagenames",pageNames);
+        model.addAttribute("pagenow",pagenum);
+        model.addAttribute("lastpage",totalpage-1);
+        System.out.println(totalpage);
+        return "filelist1";
+    }
     /**
      * 获取指定文件夹下所有文件，不含文件夹里的文件
      *
-     * @param dirFilePath 文件夹路径
+     * @param
      * @return
      */
-    public String getAllFile(String dirFilePath, Model model) {
+    public List<String> getAllFile() {
         List<String> filenames = new ArrayList<>();
 //        dirFilePath = env.getProperty("publish.path");
-        dirFilePath="d:\\publish";
+        String dirFilePath="d:\\publish";
         File folder = new File(dirFilePath);
 //        if (StrUtil.isBlank(dirFilePath))
         if (!folder.exists()) {
@@ -40,8 +61,9 @@ public class GetFileList {
             }
         }
 //        model.addAttribute("filenames",filenames);
-        System.out.println(filenames);
-        return "filelist1";
+//        System.out.println(filenames);
+        return filenames;
+//        return "filelist1";
     }
     public  void hello(){
         System.out.println("hello world");

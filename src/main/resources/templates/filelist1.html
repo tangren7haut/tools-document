@@ -8,18 +8,10 @@
 <!--    <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">-->
     <script src="js/jquery-min-3.3.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <style>
-        a{
-            display: block;
-            width: 500px;
-            height: 40px;
-            background-color: #eecc33;
-        }
-    </style>
 </head>
-<body>
-<h1 th:inlines="text">文件列表111</h1>
-<div>
+<body class="container">
+<h1 th:inlines="text">文件列表</h1>
+<div class="width:80%">
     <table class="table table-hover">
         <thead>
         <tr>
@@ -28,15 +20,41 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="name : ${filenames}">
+        <tr th:each="name : ${pagenames}">
             <th scope="row" th:text="${nameStat.index + 1}">1</th>
             <td th:text="${name}"></td>
         </tr>
         </tbody>
     </table>
-    <input type="text" class="btn-danger"><br>
-    <button class="btn btn-success">click</button>
-    <img src="image/pig.jpg" alt="">
 </div>
+    <div class="modal-footer no-margin-top">
+        <ul class="pagination pull-right no-margin">
+            <!-- 首页 -->
+            <li>
+                <a th:href="'/getlist?pagenum=0'">首页</a>
+            </li>
+
+            <!-- 上一页 -->
+            <li th:if="${pagenow}!=0">
+                <a th:href="'/getlist?pagenum=' + (${pagenow}-1)" th:text="上一页"></a>
+            </li>
+
+            <!-- 中间页 -->
+            <li th:each="pagenum:${#numbers.sequence(0,3)}">
+                <a th:href="'/getlist?pagenum=' + ${pagenum}" th:text="${pagenum + 1}" ></a>
+            </li>
+
+            <!-- 下一页 -->
+            <li>
+                <a th:href="'/getlist?pagenum=' +(${pagenow}+1)" th:text="下一页"></a>
+            </li>
+
+            <!-- 尾页 -->
+            <li>
+                <a th:href="'/getlist?pagenum=' + ${lastpage}">尾页</a>
+            </li>
+
+        </ul>
+    </div>
 </body>
 </html>
