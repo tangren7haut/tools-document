@@ -1,19 +1,16 @@
 package com.tools.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-@RestController
+@Controller
 public class GetFileList {
     @Autowired
     private Environment env;
@@ -42,9 +39,12 @@ public class GetFileList {
                 filenames.add(childFile.getName());
             }
         }
-        model.addAttribute("filenames",filenames);
+//        model.addAttribute("filenames",filenames);
         System.out.println(filenames);
         return "filelist1";
+    }
+    public  void hello(){
+        System.out.println("hello world");
     }
 }
         /**
